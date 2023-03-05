@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div className="App">
-        <iframe id='hook-iframe' title = 'universal-widget'></iframe>
+        <iframe id='hook-iframe' title='universal-widget'></iframe>
       </div>
     </>
   );
