@@ -7,7 +7,9 @@ style.innerHTML = `
 document.getElementsByTagName('head')[0].appendChild(style);
 window.addEventListener('load', () => {
     const iframe = document.getElementById('hook-iframe');
-    iframe.src="https://arterisk-uw.coachingworkspace.com";
+    const qs = new URLSearchParams(new URL(document.getElementById('script-embed').src).search);
+    const workspaceId = qs.get('workspace_id');
+    iframe.src=`https://arterisk-uw.coachingworkspace.com?workspace_id=${workspaceId}`;
     iframe.className='w-uw';
     iframe.contentWindow.postMessage('requestValidateClosedUW', "*");
 })
