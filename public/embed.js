@@ -1,3 +1,4 @@
+// style global
 const style = document.createElement('style');
 style.type = 'text/css';
 style.innerHTML = `
@@ -5,12 +6,18 @@ style.innerHTML = `
     #hook-iframe { position: absolute !important; bottom: 0px !important; right: 0px !important; border: none !important; z-index: 100000 !important; }
 `;
 document.getElementsByTagName('head')[0].appendChild(style);
+
 window.addEventListener('load', () => {
-    const iframe = document.getElementById('hook-iframe');
+    // dynamic create iframe
+    const iframe = document.createElement("iframe");
+    iframe.id='hook-iframe';
+    iframe.title='universal-widget';
     const qs = new URLSearchParams(new URL(document.getElementById('script-embed').src).search);
     const workspaceId = qs.get('workspace_id');
     iframe.src=`https://arterisk-uw.coachingworkspace.com?workspace_id=${workspaceId}`;
     iframe.className='w-uw';
+    document.body.appendChild(iframe);
+    // push message to uw
     iframe.contentWindow.postMessage('requestValidateClosedUW', "*");
 })
 window.addEventListener("resize", () => {
