@@ -10,6 +10,7 @@ document.head.insertBefore(style, document.head.firstElementChild);
 
 window.addEventListener('load', () => {
     // dynamic create iframe
+    console.log("In test add iframe");
     const iframe = document.createElement("iframe");
     iframe.id='hook-iframe';
     iframe.title='universal-widget';
