@@ -1,18 +1,18 @@
-const tagIds = {
+var tagIds = {
     style: '_universal-widget',
     iframe: 'hook-iframe',
     script: 'script-embed',
 }
-const types = {
+var types = {
     css: 'text/css',
 }
-const title = 'universal-widget';
-const classes = {
+var title = 'universal-widget';
+var classes = {
     wuw: 'w-uw',
     w100: 'w-100',
     wfill: 'w-fill',
 }
-const postmessage = {
+var postmessage = {
     validateClose: 'requestValidateClosedUW',
     closed: 'responseClosedUw'
 }
