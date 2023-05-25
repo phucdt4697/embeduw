@@ -8,7 +8,11 @@ style.innerHTML = `
 `;
 document.head.insertBefore(style, document.head.firstElementChild);
 
-window.addEventListener('load', () => {
+if (!document.getElementById('hook-iframe')) {
+    generateIframe(); 
+}
+
+function generateIframe() {
     // dynamic create iframe
     console.log("In test add iframe");
     const iframe = document.createElement("iframe");
@@ -22,7 +26,11 @@ window.addEventListener('load', () => {
     document.body.appendChild(iframe);
     // push message to uw
     iframe.contentWindow.postMessage('requestValidateClosedUW', "*");
-})
+}
+
+window.addEventListener('load', () => {
+    generateIframe();
+});
 window.addEventListener("resize", () => {
     const iframe = document.getElementById('hook-iframe');
     iframe.contentWindow.postMessage('requestValidateClosedUW', "*");
