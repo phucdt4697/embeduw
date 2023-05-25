@@ -17,10 +17,10 @@ const postmessage = {
     closed: 'responseClosedUw'
 }
 
-if (!document.getElementById(tagIds.iframe)) {
+if (document.body && !document.getElementById(tagIds.iframe)) {
     generateIframe();
 }
-if (document.getElementById(tagIds.style)) {
+if (!document.getElementById(tagIds.style)) {
     generateStyle();
 }
 
@@ -37,14 +37,14 @@ function generateStyle() {
 
 function generateIframe() {
     // dynamic create iframe
-    const iframe = document.createElement("iframe");
-    iframe.id = tagIds.iframe;
-    iframe.title = title;
     const qs = new URLSearchParams(new URL(document.getElementById(tagIds.script).src).search);
     const endpoint = qs.get('endpoint');
     qs.delete('endpoint');
     if (endpoint) {
-        iframe.src = `${endpoint}/?${qs.entries((key, value) => `${key}=${value}`).join('&')}`;
+        const iframe = document.createElement("iframe");
+        iframe.id = tagIds.iframe;
+        iframe.title = title;
+        iframe.src = `${endpoint}/?${qs.keys().length ? qs.entries((key, value) => `${key}=${value}`).join('&') : ''}`;
         iframe.className = classes.wuw;
         document.body.appendChild(iframe);
         // push message to uw
