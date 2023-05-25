@@ -6,8 +6,8 @@ style.innerHTML = `
     .w-100 { width: 100%; height: 100%; } .w-fill { width: 100px; height: 100px; } .w-uw { width: 600px; height: 100%; }
     #hook-iframe { position: absolute !important; bottom: 0px !important; right: 0px !important; border: none !important; z-index: 100000 !important; }
 `;
-console.log(document.getElementsByTagName('head')[0])
-document.getElementsByTagName('head')[0].appendChild(style);
+document.head.insertBefore(style);
+console.log(document.head);
 
 window.addEventListener('load', () => {
     // dynamic create iframe
