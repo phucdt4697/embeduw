@@ -1,10 +1,12 @@
 // style global
 const style = document.createElement('style');
 style.type = 'text/css';
+style.id = '_universal-widget';
 style.innerHTML = `
     .w-100 { width: 100%; height: 100%; } .w-fill { width: 100px; height: 100px; } .w-uw { width: 600px; height: 100%; }
     #hook-iframe { position: absolute !important; bottom: 0px !important; right: 0px !important; border: none !important; z-index: 100000 !important; }
 `;
+console.log(document.getElementsByTagName('head')[0])
 document.getElementsByTagName('head')[0].appendChild(style);
 
 window.addEventListener('load', () => {
