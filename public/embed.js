@@ -14,7 +14,8 @@ window.addEventListener('load', () => {
     iframe.title='universal-widget';
     const qs = new URLSearchParams(new URL(document.getElementById('script-embed').src).search);
     const workspaceId = qs.get('workspace_id');
-    iframe.src=`https://arterisk-uw.coachingworkspace.com?workspace_id=${workspaceId}`;
+    const token = qs.get('token');
+    iframe.src=`https://asterix-uw.coachingworkspace.com/?workspace_id=${workspaceId}&token=${token}`;
     iframe.className='w-uw';
     document.body.appendChild(iframe);
     // push message to uw
