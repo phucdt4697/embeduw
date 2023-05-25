@@ -45,7 +45,7 @@ function generateIframe() {
         iframe.id = tagIds.iframe;
         iframe.title = title;
         iframe.src = `${endpoint}/?${qs.keys().length ? qs.entries((key, value) => `${key}=${value}`).join('&') : ''}`;
-        iframe.className = classes.wuw;
+        iframe.className = classes.wfill;
         document.body.appendChild(iframe);
         // push message to uw
         iframe.contentWindow.postMessage(postmessage.validateClose, "*");
