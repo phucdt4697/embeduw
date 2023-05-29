@@ -35,6 +35,22 @@ function generateStyle() {
     document.head.insertBefore(style, document.head.firstElementChild);
 }
 
+var _pipe = (fa, fb) => (arg) => fa(fb(arg));
+var pipe = (...funcs) => funcs.reduce(_pipe);
+
+function fomartToQueryString(query) {
+    const [key, value] = query;
+    return `${key}=${value}`;
+}
+
+function convertIterableToArray(qs) {
+    return Array.from(qs);
+}
+
+function buildQueryString(values) {
+    return values.map(fomartToQueryString).join('&');
+}
+
 function generateIframe() {
     // dynamic create iframe
     const qs = new URLSearchParams(new URL(document.getElementById(tagIds.script).src).search);
@@ -44,7 +60,7 @@ function generateIframe() {
         const iframe = document.createElement("iframe");
         iframe.id = tagIds.iframe;
         iframe.title = title;
-        iframe.src = `${endpoint}/?${qs.keys().length ? qs.entries((key, value) => `${key}=${value}`).join('&') : ''}`;
+        iframe.src = `${endpoint}/?${pipe(buildQueryString, convertIterableToArray)(qs.entries())}`;
         iframe.className = classes.wuw;
         document.body.appendChild(iframe);
         // push message to uw
