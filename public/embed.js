@@ -35,8 +35,8 @@ function generateStyle() {
     document.head.insertBefore(style, document.head.firstElementChild);
 }
 
-var _pipe = (fa, fb) => (arg) => fa(fb(arg));
-var pipe = (...funcs) => funcs.reduce(_pipe);
+function _pipe(fa, fb) { return function (arg) { return fa(fb(arg)) } };
+function pipe(...funcs) { return funcs.reduce(_pipe) }
 
 function fomartToQueryString(query) {
     const [key, value] = query;
