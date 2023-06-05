@@ -29,7 +29,7 @@ function generateStyle() {
     style.type = types.css;
     style.id = tagIds.style;
     style.innerHTML = `
-    .w-100 { width: 100%; height: 100%; } .w-fill { width: 100px; height: 100px; } .w-uw { width: 600px; height: 100%; }
+    .w-100 { width: 100%; height: 100%; } .w-fill { width: 100px; height: 100px; } .w-uw { width: 450px; height: 100%; }
     #hook-iframe { position: fixed !important; bottom: 0px !important; right: 0px !important; border: none !important; z-index: 100000 !important; }
     `;
     document.head.insertBefore(style, document.head.firstElementChild);
