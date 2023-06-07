@@ -11,10 +11,13 @@ var classes = {
     wuw: 'w-uw',
     w100: 'w-100',
     wfill: 'w-fill',
+    wfs: 'w-full-screen',
 }
 var postmessage = {
     validateClose: 'requestValidateClosedUW',
-    closed: 'responseClosedUw'
+    closed: 'responseClosedUw',
+    openImage: 'reqOpenImage',
+    closedImage: 'resCloseImage',
 }
 
 if (document.body && !document.getElementById(tagIds.iframe)) {
@@ -95,6 +98,12 @@ window.addEventListener("message", (event) => {
     switch (name) {
         case postmessage.closed:
             iframe.className = isClosed ? classes.wfill : `${resizeFixedUW ? classes.wuw : classes.w100}`;
+            break;
+        case postmessage.openImage:
+            iframe.className = classes.wfs;
+            break;
+        case postmessage.closedImage:
+            iframe.className = classes.wuw;
             break;
         default:
             break;
