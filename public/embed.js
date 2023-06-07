@@ -3,15 +3,19 @@ var tagIds = {
     iframe: 'hook-iframe',
     script: 'script-embed',
 }
+
 var types = {
     css: 'text/css',
 }
+
 var title = 'universal-widget';
+
 var classes = {
     wuw: 'w-uw',
     w100: 'w-100',
     wfill: 'w-fill',
 }
+
 var postmessage = {
     validateClose: 'requestValidateClosedUW',
     closed: 'responseClosedUw'
