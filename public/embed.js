@@ -30,6 +30,7 @@ function generateStyle() {
     style.id = tagIds.style;
     style.innerHTML = `
     .w-100 { width: 100%; height: min(870px, 80%); } .w-fill { width: 100px; height: 100px; } .w-uw { width: 446px; height: min(870px, 80%); }
+    .w-full-screen { width: 100%, height: 100%; }
     #hook-iframe { 
         position: fixed !important; bottom: 0px !important; right: 0px !important; border: none !important; z-index: 100000 !important;
         box-shadow: rgba(0, 0, 0, 0.1) -55px -45px 25px -55px;
