@@ -11,7 +11,8 @@ var classes = {
     wuw: 'w-uw',
     w100: 'w-100',
     wfill: 'w-fill',
-    wfs: 'w-full-screen',
+    wfs: 'w-fs',
+    whv: 'w-hv',
 }
 var postmessage = {
     validateClose: 'requestValidateClosedUW',
@@ -19,6 +20,8 @@ var postmessage = {
     openImage: 'reqOpenImage',
     closedImage: 'resCloseImage',
 }
+var isClosedUW = true;
+var boxShadow = 'box-shadow: rgba(0, 0, 0, 0.1) -55px -45px 25px -55px;';
 
 if (document.body && !document.getElementById(tagIds.iframe)) {
     generateIframe();
@@ -32,11 +35,15 @@ function generateStyle() {
     style.type = types.css;
     style.id = tagIds.style;
     style.innerHTML = `
-    .w-100 { width: 100%; height: min(870px, 80%); } .w-fill { width: 100px; height: 100px; } .w-uw { width: 446px; height: min(870px, 80%); }
-    .w-full-screen { width: 100%, height: 100%; }
+    .w-100 { width: 100%; height: min(870px, 88%); }
+    .w-fill { width: 100px; height: 100px; }
+    .w-uw { width: 446px; height: min(870px, 88%); }
+    .w-hv { width: 550px; height: min(870px, 88%); }
+    .w-fs { width: 100%; height: 100%; }
+
     #hook-iframe { 
         position: fixed !important; bottom: 0px !important; right: 0px !important; border: none !important; z-index: 100000 !important;
-        box-shadow: rgba(0, 0, 0, 0.1) -55px -45px 25px -55px;
+        border-radius: 12px;
     }
     `;
     document.head.insertBefore(style, document.head.firstElementChild);
@@ -69,12 +76,27 @@ function generateIframe() {
         iframe.title = title;
         iframe.src = `${endpoint}/?${pipe(buildQueryString, convertIterableToArray)(qs.entries())}`;
         iframe.className = classes.wfill;
+        iframe.style.cssText = boxShadow;
+
+        iframe.onmouseover = () => {
+            if (!isClosedUW) {
+                iframe.className = classes.whv;
+                iframe.style.cssText = '';
+            }
+        }
+        iframe.onmouseout = () => {
+            if (!isClosedUW) {
+                setTimeout(() => {
+                    iframe.className = classes.wuw;
+                    iframe.style.cssText = boxShadow;
+                }, 200)
+            }
+        }
         document.body.appendChild(iframe);
         // push message to uw
         setTimeout(() => {
             resizeWindow();
-            iframe.contentWindow.postMessage(postmessage.validateClose, "*");
-        }, 5000)
+        }, 2000)
     }
 }
 
@@ -83,20 +105,15 @@ function resizeWindow() {
     iframe.contentWindow.postMessage(postmessage.validateClose, "*");
 }
 
-window.addEventListener('load', () => {
-    generateIframe();
-});
-
-window.addEventListener("resize", () => {
-    resizeWindow();
-});
-
+window.addEventListener('load', generateIframe);
+window.addEventListener("resize", resizeWindow);
 window.addEventListener("message", (event) => {
     const iframe = document.getElementById(tagIds.iframe);
     const resizeFixedUW = window.innerWidth > 434;
     const { name = '', isClosed = false } = event.data;
     switch (name) {
         case postmessage.closed:
+            isClosedUW = isClosed;
             iframe.className = isClosed ? classes.wfill : `${resizeFixedUW ? classes.wuw : classes.w100}`;
             break;
         case postmessage.openImage:
