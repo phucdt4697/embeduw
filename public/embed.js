@@ -112,7 +112,6 @@ window.addEventListener("message", (event) => {
     const iframe = document.getElementById(tagIds.iframe);
     const resizeFixedUW = window.innerWidth > 434;
     const { name = '', isClosed = false } = event.data;
-    console.log(event.data);
     switch (name) {
         case postmessage.closed:
             isClosedUW = isClosed;
