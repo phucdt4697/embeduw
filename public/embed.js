@@ -38,7 +38,7 @@ function generateStyle() {
     .w-fill { width: 100px; height: 100px; }
     .w-100 { width: 100%; height: min(870px, 88%); }
     .w-uw { width: 446px; height: min(870px, 88%); }
-    .w-hv { width: 446px; height: min(870px, 88%); transition: width 2s; }
+    .w-hv { width: 446px; height: min(870px, 88%); transition: width 1s; }
     .w-hv:hover { width: 550px; transition-timing-function: ease-in; }
     .w-fs { width: 100%; height: 100%; }
 
@@ -77,15 +77,16 @@ function generateIframe() {
         iframe.title = title;
         iframe.src = `${endpoint}/?${pipe(buildQueryString, convertIterableToArray)(qs.entries())}`;
         iframe.className = classes.wuw;
+        iframe.style.cssText = 'display: none';
 
         iframe.onmouseover = () => {
-            if (!isClosedUW) {
+            if (!isClosedUW && !iframe.className.includes(classes.wfs)) {
                 iframe.className = classes.whv;
                 iframe.style.cssText = '';
             }
         }
         iframe.onmouseout = () => {
-            if (!isClosedUW) {
+            if (!isClosedUW && !iframe.className.includes(classes.wfs)) {
                 setTimeout(() => {
                     iframe.className = classes.wuw;
                     iframe.style.cssText = boxShadow;
@@ -116,7 +117,7 @@ window.addEventListener("message", (event) => {
         case postmessage.closed:
             isClosedUW = isClosed;
             iframe.className = isClosed ? classes.wfill : `${resizeFixedUW ? classes.wuw : classes.w100}`;
-            if (!isClosed) iframe.style.cssText = boxShadow;
+            iframe.style.cssText = !isClosed ? boxShadow : '';
             break;
         case postmessage.openImage:
             iframe.className = classes.wfs;
