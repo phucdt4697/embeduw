@@ -35,10 +35,11 @@ function generateStyle() {
     style.type = types.css;
     style.id = tagIds.style;
     style.innerHTML = `
-    .w-100 { width: 100%; height: min(870px, 88%); }
     .w-fill { width: 100px; height: 100px; }
+    .w-100 { width: 100%; height: min(870px, 88%); }
     .w-uw { width: 446px; height: min(870px, 88%); }
-    .w-hv { width: 550px; height: min(870px, 88%); }
+    .w-hv { width: 446px; height: min(870px, 88%); transition: width 2s; }
+    .w-hv:hover { width: 550px; transition-timing-function: ease-in; }
     .w-fs { width: 100%; height: 100%; }
 
     #hook-iframe { 
@@ -75,8 +76,7 @@ function generateIframe() {
         iframe.id = tagIds.iframe;
         iframe.title = title;
         iframe.src = `${endpoint}/?${pipe(buildQueryString, convertIterableToArray)(qs.entries())}`;
-        iframe.className = classes.wfill;
-        iframe.style.cssText = boxShadow;
+        iframe.className = classes.wuw;
 
         iframe.onmouseover = () => {
             if (!isClosedUW) {
@@ -92,11 +92,12 @@ function generateIframe() {
                 }, 200)
             }
         }
+       
         document.body.appendChild(iframe);
         // push message to uw
         setTimeout(() => {
             resizeWindow();
-        }, 2000)
+        }, 4000)
     }
 }
 
@@ -111,10 +112,12 @@ window.addEventListener("message", (event) => {
     const iframe = document.getElementById(tagIds.iframe);
     const resizeFixedUW = window.innerWidth > 434;
     const { name = '', isClosed = false } = event.data;
+    console.log(event.data);
     switch (name) {
         case postmessage.closed:
             isClosedUW = isClosed;
             iframe.className = isClosed ? classes.wfill : `${resizeFixedUW ? classes.wuw : classes.w100}`;
+            if (!isClosed) iframe.style.cssText = boxShadow;
             break;
         case postmessage.openImage:
             iframe.className = classes.wfs;
