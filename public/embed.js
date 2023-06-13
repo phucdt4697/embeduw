@@ -22,7 +22,7 @@ var postmessage = {
 }
 var isClosedUW = true;
 var boxShadow = 'box-shadow: rgba(0, 0, 0, 0.1) -55px -45px 25px -55px;';
-
+var heightUW = 'min(880px, 92%);';
 if (document.body && !document.getElementById(tagIds.iframe)) {
     generateIframe();
 }
@@ -36,9 +36,9 @@ function generateStyle() {
     style.id = tagIds.style;
     style.innerHTML = `
     .w-fill { width: 100px; height: 100px; }
-    .w-100 { width: 100%; height: min(870px, 88%); }
-    .w-uw { width: 446px; height: min(870px, 88%); }
-    .w-hv { width: 446px; height: min(870px, 88%); transition: width 1s; }
+    .w-100 { width: 100%; height: ${heightUW} }
+    .w-uw { width: 446px; height: ${heightUW} }
+    .w-hv { width: 446px; height: ${heightUW} transition: width 1s; }
     .w-hv:hover { width: 550px; transition-timing-function: ease-in; }
     .w-fs { width: 100%; height: 100%; }
 
