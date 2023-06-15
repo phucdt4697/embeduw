@@ -109,14 +109,16 @@ window.addEventListener("message", (event) => {
         case postmessage.closedImage:
             iframe.className = classes.wuw;
             break;
-        case postmessage.hoverTooltip:
-            iframe.className = classes.whv;
-            iframe.style.cssText = '';
-            break;
-        case postmessage.closeTooltip:
-            iframe.className = classes.wuw;
-            iframe.style.cssText = boxShadow;
-            break;
+        // case postmessage.hoverTooltip:
+        //     iframe.className = classes.whv;
+        //     iframe.style.cssText = '';
+        //     break;
+        // case postmessage.closeTooltip:
+        //     setTimeout(() => {
+        //         iframe.className = classes.wuw;
+        //         iframe.style.cssText = boxShadow;
+        //     }, 1000)
+        //     break;
         default:
             break;
     }
