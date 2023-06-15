@@ -19,8 +19,9 @@ var postmessage = {
     closed: 'responseClosedUw',
     openImage: 'reqOpenImage',
     closedImage: 'resCloseImage',
+    hoverTooltip: 'hoverTooltip',
+    closeTooltip: 'closeTooltip',
 }
-var isClosedUW = true;
 var boxShadow = 'box-shadow: rgba(0, 0, 0, 0.1) -55px -45px 25px -55px;';
 var heightUW = 'min(880px, 92%);';
 if (document.body && !document.getElementById(tagIds.iframe)) {
@@ -38,8 +39,7 @@ function generateStyle() {
     .w-fill { width: 100px; height: 100px; }
     .w-100 { width: 100%; height: ${heightUW} }
     .w-uw { width: 446px; height: ${heightUW} }
-    .w-hv { width: 446px; height: ${heightUW} transition: width 1s; }
-    .w-hv:hover { width: 550px; transition-timing-function: ease-in; }
+    .w-hv { width: 550px; height: ${heightUW} }
     .w-fs { width: 100%; height: 100%; }
 
     #hook-iframe { 
@@ -76,24 +76,9 @@ function generateIframe() {
         iframe.id = tagIds.iframe;
         iframe.title = title;
         iframe.src = `${endpoint}/?${pipe(buildQueryString, convertIterableToArray)(qs.entries())}`;
-        iframe.className = classes.wuw;
+        iframe.className = classes.whv;
         iframe.style.cssText = 'display: none';
 
-        iframe.onmouseover = () => {
-            if (!isClosedUW && !iframe.className.includes(classes.wfs)) {
-                iframe.className = classes.whv;
-                iframe.style.cssText = '';
-            }
-        }
-        iframe.onmouseout = () => {
-            if (!isClosedUW && !iframe.className.includes(classes.wfs)) {
-                setTimeout(() => {
-                    iframe.className = classes.wuw;
-                    iframe.style.cssText = boxShadow;
-                }, 200)
-            }
-        }
-       
         document.body.appendChild(iframe);
         // push message to uw
         setTimeout(() => {
@@ -115,7 +100,6 @@ window.addEventListener("message", (event) => {
     const { name = '', isClosed = false } = event.data;
     switch (name) {
         case postmessage.closed:
-            isClosedUW = isClosed;
             iframe.className = isClosed ? classes.wfill : `${resizeFixedUW ? classes.wuw : classes.w100}`;
             iframe.style.cssText = !isClosed ? boxShadow : '';
             break;
@@ -124,6 +108,14 @@ window.addEventListener("message", (event) => {
             break;
         case postmessage.closedImage:
             iframe.className = classes.wuw;
+            break;
+        case postmessage.hoverTooltip:
+            iframe.className = classes.whv;
+            iframe.style.cssText = '';
+            break;
+        case postmessage.closeTooltip:
+            iframe.className = classes.wuw;
+            iframe.style.cssText = boxShadow;
             break;
         default:
             break;
