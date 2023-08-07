@@ -88,7 +88,7 @@ function generateIframe() {
 
         document.body.appendChild(iframe);
         // push message to uw
-        setTimeout(() => {
+        setInterval(() => {
             resizeWindow();
         }, 4000)
     }
