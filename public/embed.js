@@ -24,6 +24,8 @@ var postmessage = {
 }
 var boxShadow = 'box-shadow: rgba(0, 0, 0, 0.1) -55px -45px 25px -55px;';
 var heightUW = 'min(880px, 92%);';
+var loopResize;
+
 if (document.body && !document.getElementById(tagIds.iframe)) {
     generateIframe();
 }
@@ -88,9 +90,7 @@ function generateIframe() {
 
         document.body.appendChild(iframe);
         // push message to uw
-        setInterval(() => {
-            resizeWindow();
-        }, 4000)
+        loopResize = setInterval(resizeWindow, 1000);
     }
 }
 
@@ -107,6 +107,7 @@ window.addEventListener("message", (event) => {
     const { name = '', isClosed = false } = event.data;
     switch (name) {
         case postmessage.closed:
+            clearInterval(loopResize);
             iframe.className = isClosed ? classes.wfill : `${resizeFixedUW ? classes.wuw : classes.w100}`;
             iframe.style.cssText = !isClosed ? boxShadow : '';
             break;
