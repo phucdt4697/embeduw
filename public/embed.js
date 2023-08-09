@@ -97,7 +97,7 @@ function generateIframe() {
 
 function resizeWindow() {
     const iframe = document.getElementById(tagIds.iframe);
-    iframe.contentWindow.postMessage(postmessage.validateClose, "*");
+    if (iframe) iframe.contentWindow.postMessage(postmessage.validateClose, "*");
 }
 
 window.addEventListener('load', generateIframe);
